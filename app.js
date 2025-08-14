@@ -27,8 +27,24 @@ function sortearAmigo() {
     return;
   }
   
+  // Copia del array para no repetir
+  const copiaAmigos = [...amigos];
+  const resultado = document.getElementById('resultado');
+  resultado.innerHTML = '';
+  
+  amigos.forEach(amigo => {
+    // Filtra para no elegirse a sí mismo
+    const opciones = copiaAmigos.filter(nombre => nombre !== amigo);
+    if (opciones.length > 0) {
+      const amigoSecreto = opciones[Math.floor(Math.random() * opciones.length)];
+      resultado.innerHTML += `<li><strong>${amigo}</strong> le regala a <strong>${amigoSecreto}</strong></li>`;
+      // Eliminar el elegido para no repetir
+      copiaAmigos.splice(copiaAmigos.indexOf(amigoSecreto), 1);
+    }
+  });
+  
   // Elegir al azar
-  const ganador = amigos[Math.floor(Math.random() * amigos.length)];
+ const ganador = amigos[Math.floor(Math.random() * amigos.length)];
   document.getElementById('resultado').innerHTML = `
     <li>¡El amigo secreto es: <strong>${ganador}</strong>!</li>
   `;
